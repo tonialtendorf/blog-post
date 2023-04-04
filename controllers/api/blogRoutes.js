@@ -2,7 +2,7 @@ const router = require('express').Router();
 const sequelize = require('../config/connection');
 const Blog = require('../models/blog');
 
-exports.getAllBlogs = async (req, res) => {
+router.getAllBlogs = async (req, res) => {
 
   try{ 
     const blogData = await Blog.findAll();
@@ -22,7 +22,7 @@ exports.getAllBlogs = async (req, res) => {
 
 
 // route to get one blog
-exports.getSingleBlog = async (req, res) => {
+router.getSingleBlog = async (req, res) => {
   try{ 
       const blogData = await Blog.findByPk(req.params.id);
       if(!blogData) {
@@ -35,3 +35,6 @@ exports.getSingleBlog = async (req, res) => {
         res.status(500).json(err);
     };     
 };
+
+
+module.exports = router

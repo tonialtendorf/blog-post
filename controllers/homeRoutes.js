@@ -1,11 +1,11 @@
 const router = require("express").Router();
 const withAuth = require('../utils/auth')
-const { Product, User } = require("../models");
+const { Blog, User } = require("../models");
 
 //get all products and join with user data
 router.get("/", async (req, res) => {
   try {
-    const productData = await Product.findAll({
+    const blogData = await Blog.findAll({
       include: [
       {
         model: User,
@@ -14,10 +14,10 @@ router.get("/", async (req, res) => {
       ],
     });
 
-    const products = productData.map((product) => product.get({ plain: true }));
+    const blogs = blogData.map((blog) => blog.get({ plain: true }));
 
     res.render('homepage', {
-      products,
+      blogs,
       logged_in: req.session.logged_in
     });
   } catch (error) {
@@ -25,9 +25,9 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/shoppingList/:id", async (req, res) => {
+router.get("/blog/:id", async (req, res) => {
   try {
-    const productData = await Product.findByPk(req.params.id, {
+    const blogData = await Blog.findByPk(req.params.id, {
       include: [
         {
           model: User,
@@ -36,10 +36,10 @@ router.get("/shoppingList/:id", async (req, res) => {
       ],
     });
 
-    const product = productData.get({ plain: true });
+    const blog = blogData.get({ plain: true });
 
-    res.render("shopping", {
-      ...product,
+    res.render("blog", {
+      ...blog,
       logged_in: req.session.logged_in
     });
   } catch (err) {
@@ -48,9 +48,9 @@ router.get("/shoppingList/:id", async (req, res) => {
 });
 
 
-router.get("/shoppingList", async (req, res) => {  
+router.get("/blog", async (req, res) => {  
   try {
-    const productData = await Product.findAll({
+    const blogData = await Blog.findAll({
       include: [
       {
         model: User,
@@ -59,8 +59,8 @@ router.get("/shoppingList", async (req, res) => {
       ],
     });
 
-    const products = productData.map((product) => product.get({ plain: true }));
-    res.render('shopping', {
+    const blogs = blogData.map((blog) => blog.get({ plain: true }));
+    res.render('blog', {
       products,
       logged_in: req.session.logged_in
     });

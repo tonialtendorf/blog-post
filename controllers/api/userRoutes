@@ -1,7 +1,3 @@
-
-// //Express required, and router object created
-// const express = require("express")
-
 const router = require("express").Router();
 //User model imported from ../../models directory
 const { User } = require("../../models");
